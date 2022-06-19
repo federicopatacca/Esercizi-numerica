@@ -1,0 +1,24 @@
+f = @(x) sqrt((1-x).^5);
+g = @(x) sqrt(1-x);
+
+%% a
+
+xx = linspace(-1, 1, 1000);
+plot(xx, f(xx), xx, g(xx), 'LineWidth', 4);
+
+%% c
+a = -1;
+b = 1;
+If = [];
+Ig = [];
+for N = [5 10 20 40 80]
+    If = [If trapcomp(a, b, N, f)];
+    Ig = [Ig trapcomp(a, b, N, g)];
+end
+
+%% d
+
+Iexf = sqrt(512)/7;
+Iexg = sqrt(32)/3;
+errf = abs(Iexf*ones(1,5) - If);
+loglog([5 10 20 40 80], errf)
